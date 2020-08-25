@@ -6,13 +6,17 @@ function! RNAComplementBase(base) abort
       \"A" : "U"
     \}
 
-  return get(l:pairsDict,a:base,'')
+  return l:pairsDict[a:base]
 endfunction
 "
 function! ToRna(strand) abort
-  return join(
-            \map(
-              \split(a:strand,'\zs'),
-              \{ _, base -> RNAComplementBase(base) }),
-         \'')
+  try
+    return join(
+              \map(
+                \split(a:strand,'\zs'),
+                \{ _, base -> RNAComplementBase(base) }),
+           \'')
+  catch
+    return ''
+  endtry
 endfunction
