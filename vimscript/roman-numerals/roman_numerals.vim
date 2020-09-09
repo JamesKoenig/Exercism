@@ -1,36 +1,24 @@
-"
-" This works, but I really want to refactor it
-"
+let s:opList = [
+  \[ 1000, 'M', 1000 ],
+  \[  900, 'C', -100 ],
+  \[  500, 'D',  500 ],
+  \[  400, 'C', -100 ],
+  \[  100, 'C',  100 ],
+  \[   90, 'X',  -10 ],
+  \[   50, 'L',   50 ],
+  \[   40, 'X',  -10 ],
+  \[   10, 'X',   10 ],
+  \[    9, 'I',   -1 ],
+  \[    5, 'V',    5 ],
+  \[    4, 'I',   -1 ],
+  \[    1, 'I',    1 ],
+\]
 
 function! ToRoman(number) abort
-  " your code goes here
-  if a:number >= 1000
-    return 'M' . ToRoman(a:number-1000)
-  elseif a:number >= 900
-    return 'C' . ToRoman(a:number+100)
-  elseif a:number >= 500
-    return 'D' . ToRoman(a:number-500)
-  elseif a:number >= 400
-    return 'C' . ToRoman(a:number+100)
-  elseif a:number >= 100
-    return 'C' . ToRoman(a:number-100)
-  elseif a:number >= 90
-    return 'X' . ToRoman(a:number+10)
-  elseif a:number >= 50
-    return 'L' . ToRoman(a:number-50)
-  elseif a:number >= 40
-    return 'X' . ToRoman(a:number+10)
-  elseif a:number >= 10
-    return 'X' . ToRoman(a:number-10)
-  elseif a:number >= 9
-    return 'I' . ToRoman(a:number+1)
-  elseif a:number >= 5
-    return 'V' . ToRoman(a:number-5)
-  elseif a:number >= 4
-    return 'I' . ToRoman(a:number+1)
-  elseif a:number > 0
-    return 'I' . ToRoman(a:number-1)
-  else
-    return ""
-  endif
+  for [grEqNum, numeral, difference] in s:opList
+    if a:number >= grEqNum
+      return numeral . ToRoman(a:number - difference)
+    endif
+  endfor
+  return ""
 endfunction
